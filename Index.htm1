@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Camera Demo</title>
+</head>
+<body>
+
+<h2>📷 Camera Demo</h2>
+
+<video id="video" autoplay playsinline width="100%"></video>
+<br><br>
+
+<button onclick="startCamera()">Start Camera</button>
+<button onclick="stopCamera()">Stop Camera</button>
+
+<script>
+let stream;
+
+async function startCamera() {
+  try {
+    stream = await navigator.mediaDevices.getUserMedia({
+      video: true,
+      audio: false
+    });
+
+    document.getElementById("video").srcObject = stream;
+  } catch (error) {
+    alert("Camera permission नहीं मिली।");
+  }
+}
+
+function stopCamera() {
+  if (stream) {
+    stream.getTracks().forEach(track => track.stop());
+    stream = null;
+    document.getElementById("video").srcObject = null;
+  }
+}
+</script>
+
+</body>
+</html>
